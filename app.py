@@ -78,7 +78,7 @@ with right:
     st.plotly_chart(group_mix_chart(filtered), use_container_width=True, config={"displayModeBar": False}, key="group_mix_representation")
 
 st.markdown("### Member representation register")
-display_columns = [GROUP_TYPE_COLUMN, GROUP_NAME_COLUMN, "Core team members", "Women core team members", "Women share of core team"]
-display = filtered[display_columns].rename(columns={GROUP_TYPE_COLUMN: "Group type", GROUP_NAME_COLUMN: "Group name", "Women core team members": "Women core members", "Women share of core team": "Women share (%)"}).copy()
+display_columns = [GROUP_TYPE_COLUMN, GROUP_NAME_COLUMN, "Full Name", "Core team members", "Women core team members", "Women share of core team"]
+display = filtered[display_columns].rename(columns={GROUP_TYPE_COLUMN: "Group type", GROUP_NAME_COLUMN: "Group name", "Full Name": "Chair name", "Women core team members": "Women core members", "Women share of core team": "Women share (%)"}).copy()
 display["Women share (%)"] = display["Women share (%)"].round(1)
 st.dataframe(display, use_container_width=True, hide_index=True, column_config={"Women share (%)": st.column_config.NumberColumn(format="%.1f%%")})
