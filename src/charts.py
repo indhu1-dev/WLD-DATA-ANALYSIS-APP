@@ -82,3 +82,35 @@ def women_share_chart(df: pd.DataFrame) -> go.Figure:
     return _base_layout(fig, "Women representation within core teams")
 
 
+def leadership_representation_chart() -> go.Figure:
+    plot_df = pd.DataFrame(
+        {
+            "Leadership level": ["Senior Director", "Director", "Senior ADM", "ADM"],
+            "Total leaders": [1, 6, 0, 53],
+            "Women leaders": [1, 0, 0, 12],
+        }
+    )
+    plot_df["Women / total"] = plot_df.apply(
+        lambda row: f"{row['Women leaders']} / {row['Total leaders']}"
+        + ("*" if row["Leadership level"] == "Senior ADM" else ""),
+        axis=1,
+    )
+    fig = px.bar(
+        plot_df,
+        x="Women leaders",
+        y="Leadership level",
+        orientation="h",
+        text="Women / total",
+        color_discrete_sequence=[TEAL],
+        labels={"Women leaders": "Women leaders", "Leadership level": ""},
+        hover_data={"Women leaders": True, "Total leaders": True},
+    )
+    fig.update_traces(textposition="outside", cliponaxis=False, marker_line_width=0)
+    fig.update_xaxes(range=[0, 60], dtick=10)
+    fig.update_yaxes(
+        categoryorder="array",
+        categoryarray=["ADM", "Senior ADM", "Director", "Senior Director"],
+    )
+    return _base_layout(fig, "Women leaders by level (women / total)")
+
+

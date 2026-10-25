@@ -1,6 +1,11 @@
 import streamlit as st
 
-from src.charts import core_team_chart, group_mix_chart, women_share_chart
+from src.charts import (
+    core_team_chart,
+    group_mix_chart,
+    leadership_representation_chart,
+    women_share_chart,
+)
 from src.data_loader import GROUP_NAME_COLUMN, GROUP_TYPE_COLUMN, apply_filters, load_data
 
 
@@ -76,6 +81,17 @@ with left:
     st.plotly_chart(women_share_chart(filtered), use_container_width=True, config={"displayModeBar": False}, key="women_share_by_group")
 with right:
     st.plotly_chart(group_mix_chart(filtered), use_container_width=True, config={"displayModeBar": False}, key="group_mix_representation")
+
+st.plotly_chart(
+    leadership_representation_chart(),
+    use_container_width=True,
+    config={"displayModeBar": False},
+    key="women_leadership_representation",
+)
+st.caption(
+    "Senior ADM is shown as 0 / 0*: the HR report has no one at this level, "
+    "though the title remains visible in Teams as part of the PPOM initiative."
+)
 
 st.markdown("### Member representation register")
 display_columns = [GROUP_TYPE_COLUMN, GROUP_NAME_COLUMN, "Full Name", "Core team members", "Women core team members", "Women share of core team"]
